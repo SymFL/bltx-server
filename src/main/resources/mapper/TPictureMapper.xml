@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csk2024.bltx.mapper.TPictureMapper">
+    <resultMap id="BaseResultMap" type="com.csk2024.bltx.model.TPicture">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="probability" jdbcType="DECIMAL" property="probability"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, `name`, url, remark, `result`, probability
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_picture
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="batchDelete" parameterType="java.lang.Integer">
+        delete from t_picture
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
+    <select id="selectUsersByPage" resultMap="BaseResultMap">
+        select tp.id,
+               tp.user_id,
+               tp.`name`,
+               tp.url,
+               tp.remark,
+               tp.`result`,
+               tp.probability,
+               tu.name as user_name
+        from t_picture tp
+                 left join t_user tu on tp.user_id = tu.id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_picture
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.csk2024.bltx.model.TPicture"
+            useGeneratedKeys="true">
+        insert into t_picture (user_id, `name`, url,
+                               remark, `result`, probability)
+        values (#{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{probability,jdbcType=DECIMAL})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.csk2024.bltx.model.TPicture"
+            useGeneratedKeys="true">
+        insert into t_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="result != null">
+                `result`,
+            </if>
+            <if test="probability != null">
+                probability,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="probability != null">
+                #{probability,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.csk2024.bltx.model.TPicture">
+        update t_picture
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                `result` = #{result,jdbcType=VARCHAR},
+            </if>
+            <if test="probability != null">
+                probability = #{probability,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csk2024.bltx.model.TPicture">
+        update t_picture
+        set user_id     = #{userId,jdbcType=INTEGER},
+            `name`      = #{name,jdbcType=VARCHAR},
+            url         = #{url,jdbcType=VARCHAR},
+            remark      = #{remark,jdbcType=VARCHAR},
+            `result`    = #{result,jdbcType=VARCHAR},
+            probability = #{probability,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
