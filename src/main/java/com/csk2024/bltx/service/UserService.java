@@ -5,6 +5,8 @@ import com.csk2024.bltx.query.UserQuery;
 import com.github.pagehelper.PageInfo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
     PageInfo<TUser> getUsersByPage(Integer current);
 
@@ -13,4 +15,8 @@ public interface UserService extends UserDetailsService {
     int saveUser(UserQuery userQuery);
 
     int editUser(UserQuery userQuery);
+
+    int delUser(Integer id);
+
+    int batchDel(List<String> ids);
 }

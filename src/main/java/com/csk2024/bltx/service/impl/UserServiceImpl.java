@@ -80,4 +80,14 @@ public class UserServiceImpl implements UserService {
 
         return tUserMapper.updateByPrimaryKeySelective(user);
     }
+
+    @Override
+    public int delUser(Integer id) {
+        return tUserMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int batchDel(List<String> ids) {
+        return tUserMapper.batchDelete(ids);
+    }
 }

@@ -29,4 +29,6 @@ public interface TUserMapper {
     List<TUser> selectUsersByPage();
 
     TUser selectUserDetailById(@Param("id") Integer id);
+
+    int batchDelete(@Param("ids") List<String> ids);
 }

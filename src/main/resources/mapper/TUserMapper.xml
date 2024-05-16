@@ -71,6 +71,15 @@
         from t_user
     </select>
 
+    <delete id="batchDelete" parameterType="java.lang.Integer">
+        delete
+        from t_user
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            (#{id,jdbcType=INTEGER})
+        </foreach>
+    </delete>
+
     <select id="selectUserDetailById" resultMap="UserDetailResultMap">
         select
             tu1.*,
@@ -88,6 +97,7 @@
         from t_user
         where id = #{id,jdbcType=INTEGER}
     </delete>
+
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.csk2024.bltx.model.TUser"
             useGeneratedKeys="true">
         insert into t_user (login_act, login_pwd, `name`,

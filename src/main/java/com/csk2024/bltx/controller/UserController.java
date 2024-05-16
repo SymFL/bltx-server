@@ -9,6 +9,9 @@ import jakarta.annotation.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 @RestController
 public class UserController {
@@ -49,7 +52,6 @@ public class UserController {
     @GetMapping("/api/users/{id}")
     public R userDetail(@PathVariable("id") Integer id){
         TUser user = userService.getUserDetail(id);
-        System.out.println(user.getCreateTime());
         return R.OK(user);
     }
 
@@ -71,5 +73,24 @@ public class UserController {
         userQuery.setToken(token);
         int edit = userService.editUser(userQuery);
         return edit >= 1 ? R.OK() : R.FAIL();
+    }
+
+    /**
+     * 删除用户
+     */
+    @DeleteMapping("/api/users/{id}")
+    public R delUser(@PathVariable("id") Integer id){
+        int del = userService.delUser(id);
+        return del >= 1 ? R.OK() : R.FAIL();
+    }
+
+    /**
+     * 批量删除
+     */
+    @DeleteMapping("/api/users")
+    public R batchDel(@RequestParam String ids){
+        List<String> id = Arrays.asList(ids.split(","));
+        int del = userService.batchDel(id);
+        return del > 0 ? R.OK() : R.FAIL();
     }
 }
