@@ -29,7 +29,7 @@
         </foreach>
     </delete>
 
-    <select id="selectUsersByPage" resultMap="BaseResultMap">
+    <select id="selectPicsByPage" resultMap="BaseResultMap">
         select tp.id,
                tp.user_id,
                tp.`name`,
@@ -40,6 +40,21 @@
                tu.name as user_name
         from t_picture tp
                  left join t_user tu on tp.user_id = tu.id
+    </select>
+
+    <select id="selectUserPicsByPage" resultMap="BaseResultMap">
+        select tp.id,
+               tp.user_id,
+               tp.`name`,
+               tp.url,
+               tp.remark,
+               tp.`result`,
+               tp.probability
+        from t_picture tp
+        where tp.user_id = #{pictureQuery.userId}
+        <if test="pictureQuery.name != null and pictureQuery.name != ''">
+            and tp.name like concat("%",#{pictureQuery.name},"%")
+        </if>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

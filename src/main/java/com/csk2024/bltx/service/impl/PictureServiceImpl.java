@@ -19,7 +19,7 @@ public class PictureServiceImpl implements PictureService {
     @Override
     public PageInfo<TPicture> getPicturesByPage(Integer current) {
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        List<TPicture> list = tPictureMapper.selectUsersByPage();
+        List<TPicture> list = tPictureMapper.selectPicsByPage();
         return new PageInfo<>(list);
     }
 

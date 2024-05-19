@@ -1,6 +1,7 @@
 package com.csk2024.bltx.mapper;
 
 import com.csk2024.bltx.model.TPicture;
+import com.csk2024.bltx.query.PictureQuery;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,9 @@ public interface TPictureMapper {
 
     int updateByPrimaryKey(TPicture record);
 
-    List<TPicture> selectUsersByPage();
+    List<TPicture> selectPicsByPage();
 
     int batchDelete(@Param("ids") List<String> id);
+
+    List<TPicture> selectUserPicsByPage(@Param("pictureQuery") PictureQuery pictureQuery);
 }
