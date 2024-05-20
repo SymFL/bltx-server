@@ -53,7 +53,9 @@ public class UserPicController {
      * 图片上传
      */
     @PostMapping("/api/userPics/upload")
-    public R upload(@RequestParam("name") String name, @RequestParam("remark") String remark, @RequestParam("picture") MultipartFile picture, @RequestHeader(value="Authorization") String token){
+    public R upload(@RequestParam("name") String name, @RequestParam("remark") String remark,
+                    @RequestParam("picture") MultipartFile picture,
+                    @RequestHeader(value="Authorization") String token){
         PictureQuery pictureQuery = new PictureQuery();
         pictureQuery.setToken(token);
         pictureQuery.setName(name);
@@ -72,6 +74,19 @@ public class UserPicController {
             return R.FAIL("图片离家出走了喵，请联系管理员~");
         }else {
             return R.OK(pictureQuery);
+        }
+    }
+
+    /**
+     * 预测图片
+     */
+    @GetMapping("/api/userPics/predict/{id}")
+    public R predict(@PathVariable("id") Integer id){
+        int i = userPicService.predict(id);
+        if(i > 0){
+            return R.OK();
+        }else{
+            return R.FAIL();
         }
     }
 }

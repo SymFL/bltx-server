@@ -18,4 +18,6 @@ public interface UserPicService {
     R upload(PictureQuery pictureQuery);
 
     PictureQuery info(Integer id);
+
+    int predict(Integer id);
 }

@@ -7,6 +7,7 @@ import com.csk2024.bltx.query.PictureQuery;
 import com.csk2024.bltx.result.R;
 import com.csk2024.bltx.service.UserPicService;
 import com.csk2024.bltx.utils.JWTUtils;
+import com.csk2024.bltx.utils.PythonServerUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,7 +75,7 @@ public class UserPicServiceImpl implements UserPicService {
         long timestamp = System.currentTimeMillis();
         String fileName = timestamp + suffix;
         //创建一个目录对象
-        String path = basePath + pictureQuery.getUserId() + "\\";
+        String path = basePath + pictureQuery.getUserId() + "\\\\";
         String picPath = path + fileName;
         File dir = new File(path);
         //判断当前目录是否存在：目录不存在，需要创建
@@ -88,7 +90,7 @@ public class UserPicServiceImpl implements UserPicService {
         pictureQuery.setUrl(picPath);
         TPicture tPicture = new TPicture();
         BeanUtils.copyProperties(pictureQuery,tPicture);
-        int i = tPictureMapper.insertSelective(tPicture);
+        int i = tPictureMapper.insert(tPicture);
         if (i > 0){
             return R.OK();
         }else{
@@ -113,6 +115,31 @@ public class UserPicServiceImpl implements UserPicService {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public int predict(Integer id) {
+        TPicture tPicture = tPictureMapper.selectByPrimaryKey(id);
+        if(tPicture.getResult() != null && !tPicture.getResult().isEmpty()){
+            return 1;
+        }
+        if(tPicture.getUrl() == null || tPicture.getUrl().isEmpty()){
+            throw new RuntimeException("图片不存在喵~请刷新页面喵~");
+        }
+        String predict = PythonServerUtils.predict(tPicture.getUrl());
+        if(predict == null){
+            throw new RuntimeException("服务器出现问题了喵~请联系管理员处理喵~");
+        }else if ("error".equals(predict)){
+            throw new RuntimeException("分类预测失败喵~请联系管理员喵~");
+        }else {
+            String[] strings = predict.split(",");
+            tPicture.setResult(strings[0]);
+            BigDecimal a = new BigDecimal("100");
+            BigDecimal b = new BigDecimal(strings[1]);
+            BigDecimal result = b.multiply(a);
+            tPicture.setProbability(result);
+            return tPictureMapper.updateByPrimaryKey(tPicture);
         }
     }
 }

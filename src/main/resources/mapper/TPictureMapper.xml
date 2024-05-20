@@ -43,6 +43,7 @@
         <if test="pictureQuery.name != null and pictureQuery.name != ''">
             where tp.name like concat("%",#{pictureQuery.name},"%")
         </if>
+        order by tp.id desc
     </select>
 
     <select id="selectUserPicsByPage" resultMap="BaseResultMap">
@@ -58,6 +59,7 @@
         <if test="pictureQuery.name != null and pictureQuery.name != ''">
             and tp.name like concat("%",#{pictureQuery.name},"%")
         </if>
+        order by tp.id desc
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
