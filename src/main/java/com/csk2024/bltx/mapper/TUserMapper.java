@@ -26,7 +26,7 @@ public interface TUserMapper {
     /**
      * 分页查询所有用户
      */
-    List<TUser> selectUsersByPage();
+    List<TUser> selectUsersByPage(@Param("name") String name);
 
     TUser selectUserDetailById(@Param("id") Integer id);
 

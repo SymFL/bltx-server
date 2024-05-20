@@ -21,7 +21,7 @@ public interface TPictureMapper {
 
     int updateByPrimaryKey(TPicture record);
 
-    List<TPicture> selectPicsByPage();
+    List<TPicture> selectPicsByPage(@Param("pictureQuery") PictureQuery pictureQuery);
 
     int batchDelete(@Param("ids") List<String> id);
 

@@ -40,6 +40,9 @@
                tu.name as user_name
         from t_picture tp
                  left join t_user tu on tp.user_id = tu.id
+        <if test="pictureQuery.name != null and pictureQuery.name != ''">
+            where tp.name like concat("%",#{pictureQuery.name},"%")
+        </if>
     </select>
 
     <select id="selectUserPicsByPage" resultMap="BaseResultMap">

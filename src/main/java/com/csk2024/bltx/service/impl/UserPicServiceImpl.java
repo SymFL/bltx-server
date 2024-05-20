@@ -96,48 +96,6 @@ public class UserPicServiceImpl implements UserPicService {
         }
     }
 
-   /* @Override
-    public void download(Integer id, HttpServletResponse response) {
-        TPicture tPicture = tPictureMapper.selectByPrimaryKey(id);
-        if (tPicture == null) {
-            throw new RuntimeException("图片离家出走了，请联系管理员先生/小姐处理~");
-        }
-        String url = tPicture.getUrl();
-        File pic = new File(url);
-        FileInputStream fileInputStream = null;
-        ServletOutputStream outputStream = null;
-        try {
-            //输入流，通过输入流读取文件内容
-            fileInputStream = new FileInputStream(pic);
-            //输出流，通过输出流将文件写回浏览器
-            outputStream = response.getOutputStream();
-            response.setContentType("image/tif");
-            int len = 0;
-            byte[] bytes = new byte[1024];
-            while ((len = fileInputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
-            }
-            outputStream.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }*/
-
     @Override
     public PictureQuery info(Integer id) {
         TPicture tPicture = tPictureMapper.selectByPrimaryKey(id);

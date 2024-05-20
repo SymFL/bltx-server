@@ -69,6 +69,9 @@
         select
         <include refid="Base_Column_List"/>
         from t_user
+        <if test="name != null and name != ''">
+            where name like concat("%",#{name},"%")
+        </if>
     </select>
 
     <delete id="batchDelete" parameterType="java.lang.Integer">

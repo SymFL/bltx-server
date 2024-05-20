@@ -17,7 +17,5 @@ public interface UserPicService {
 
     R upload(PictureQuery pictureQuery);
 
-//    void download(Integer id, HttpServletResponse response);
-
     PictureQuery info(Integer id);
 }

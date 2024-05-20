@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
      * 分页查询所有用户
      */
     @Override
-    public PageInfo<TUser> getUsersByPage(Integer current) {
+    public PageInfo<TUser> getUsersByPage(Integer current,String name) {
         PageHelper.startPage(current, Constants.PAGE_SIZE);
-        List<TUser> list = tUserMapper.selectUsersByPage();
+        List<TUser> list = tUserMapper.selectUsersByPage(name);
         return new PageInfo<>(list);
     }
 

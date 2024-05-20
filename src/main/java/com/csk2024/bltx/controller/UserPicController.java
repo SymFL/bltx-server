@@ -61,14 +61,6 @@ public class UserPicController {
         pictureQuery.setPicture(picture);
         return userPicService.upload(pictureQuery);
     }
-/*
-    *//**
-     * 下载图片
-     *//*
-    @GetMapping("/api/userPics/download/{id}")
-    public void download(@PathVariable("id") Integer id, HttpServletResponse response){
-        userPicService.download(id,response);
-    }*/
 
     /**
      * 查询图片信息

@@ -2,6 +2,7 @@ package com.csk2024.bltx.controller;
 
 import com.csk2024.bltx.model.TPicture;
 import com.csk2024.bltx.model.TUser;
+import com.csk2024.bltx.query.PictureQuery;
 import com.csk2024.bltx.result.R;
 import com.csk2024.bltx.service.PictureService;
 import com.github.pagehelper.PageInfo;
@@ -20,12 +21,9 @@ public class PictureController {
     /**
      * 查询图片列表
      */
-    @GetMapping("/api/pics")
-    public R userList(@RequestParam(value = "current",required = false) Integer current){
-        if (current == null){
-            current = 1;
-        }
-        PageInfo<TPicture> pageInfo = pictureService.getPicturesByPage(current);
+    @PostMapping("/api/pics")
+    public R userList(@RequestBody PictureQuery pictureQuery){
+        PageInfo<TPicture> pageInfo = pictureService.getPicturesByPage(pictureQuery);
         return R.OK(pageInfo);
     }
 
@@ -46,5 +44,18 @@ public class PictureController {
         List<String> id = Arrays.asList(ids.split(","));
         int del = pictureService.batchDel(id);
         return del > 0 ? R.OK() : R.FAIL();
+    }
+
+    /**
+     * 查询图片信息
+     */
+    @GetMapping("/api/pics/info/{id}")
+    public R info(@PathVariable("id") Integer id){
+        PictureQuery pictureQuery = pictureService.info(id);
+        if(pictureQuery == null){
+            return R.FAIL("图片离家出走了喵，请联系管理员~");
+        }else {
+            return R.OK(pictureQuery);
+        }
     }
 }

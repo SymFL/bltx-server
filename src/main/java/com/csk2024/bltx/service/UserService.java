@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    PageInfo<TUser> getUsersByPage(Integer current);
+    PageInfo<TUser> getUsersByPage(Integer current,String name);
 
     TUser getUserDetail(Integer id);
 

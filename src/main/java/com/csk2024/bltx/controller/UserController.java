@@ -38,11 +38,15 @@ public class UserController {
      * 查询用户列表
      */
     @GetMapping("/api/users")
-    public R userList(@RequestParam(value = "current",required = false) Integer current){
+    public R userList(@RequestParam(value = "current",required = false) Integer current,
+                      @RequestParam(value = "name",required = false) String name){
         if (current == null){
             current = 1;
         }
-        PageInfo<TUser> pageInfo = userService.getUsersByPage(current);
+        if(name == null){
+            name = "";
+        }
+        PageInfo<TUser> pageInfo = userService.getUsersByPage(current,name);
         return R.OK(pageInfo);
     }
 
