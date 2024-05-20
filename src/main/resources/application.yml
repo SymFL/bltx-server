@@ -6,7 +6,7 @@ server:
 #配置数据库连接相关信息
 spring:
   datasource:
-    url: jdbc:mysql://192.168.226.129:3306/yssw?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://192.168.226.129:3306/bltx?useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Csk@123456
@@ -35,8 +35,16 @@ spring:
     time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
 
+  servlet:
+    multipart:
+      enabled: true
+
 #指定一下mapper.xml文件的位置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+#指定图片上传的基础路径
+hong:
+  path: D:\IdeaProjects\bltx\picture\
