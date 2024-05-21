@@ -66,7 +66,7 @@ public class UserController {
     public R addUser(UserQuery userQuery, @RequestHeader(value="Authorization") String token){
         userQuery.setToken(token);
         int save = userService.saveUser(userQuery);
-        return save >= 1 ? R.OK() : R.FAIL();
+        return save >= 2 ? R.OK() : R.FAIL();
     }
 
     /**
@@ -76,7 +76,7 @@ public class UserController {
     public R editUser(UserQuery userQuery, @RequestHeader(value="Authorization") String token){
         userQuery.setToken(token);
         int edit = userService.editUser(userQuery);
-        return edit >= 1 ? R.OK() : R.FAIL();
+        return edit >= 2 ? R.OK() : R.FAIL();
     }
 
     /**
@@ -96,5 +96,15 @@ public class UserController {
         List<String> id = Arrays.asList(ids.split(","));
         int del = userService.batchDel(id);
         return del > 0 ? R.OK() : R.FAIL();
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("/api/users/changePwd")
+    public R changePwd(@RequestBody UserQuery userQuery,
+                       @RequestHeader(value="Authorization") String token){
+        userQuery.setToken(token);
+        return userService.changePwd(userQuery);
     }
 }

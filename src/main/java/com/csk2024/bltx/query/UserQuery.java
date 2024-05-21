@@ -38,22 +38,22 @@ public class UserQuery extends BaseQuery {
     private String email;
 
     /**
-     * 账户是否没有过期，0已过期 1正常
-     */
-    private Integer accountNoExpired;
-
-    /**
-     * 密码是否没有过期，0已过期 1正常
-     */
-    private Integer credentialsNoExpired;
-
-    /**
-     * 账号是否没有锁定，0已锁定 1正常
-     */
-    private Integer accountNoLocked;
-
-    /**
      * 账号是否启用，0禁用 1启用
      */
     private Integer accountEnabled;
+
+    /**
+     * 账号角色
+     */
+    private Integer role;
+
+    /**
+     * 原密码
+     */
+    private String oldLoginPwd;
+
+    /**
+     * 新密码
+     */
+    private String newLoginPwd;
 }

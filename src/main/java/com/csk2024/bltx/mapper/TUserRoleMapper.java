@@ -14,4 +14,6 @@ public interface TUserRoleMapper {
     int updateByPrimaryKeySelective(TUserRole record);
 
     int updateByPrimaryKey(TUserRole record);
+
+    TUserRole selectByUserId(Integer id);
 }

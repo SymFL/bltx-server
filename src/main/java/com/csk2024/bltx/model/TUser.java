@@ -112,6 +112,16 @@ public class TUser implements UserDetails,Serializable {
      */
     private List<String> permissionList;
 
+    /**
+     * 用户菜单权限列表
+     */
+    private List<TPermission> menuPermissionList;
+
+    /**
+     * 角色
+     */
+    private Integer role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();

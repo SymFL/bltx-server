@@ -15,6 +15,17 @@
     from t_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+      tr.id,
+      tr.`role`,
+      tr.role_name
+    from t_role tr
+    left join t_user_role tur on tr.id = tur.role_id
+    where tur.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from t_role
     where id = #{id,jdbcType=INTEGER}
