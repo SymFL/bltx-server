@@ -47,4 +47,4 @@ mybatis:
 
 #指定图片上传的基础路径
 hong:
-  path: D:\IdeaProjects\bltx\picture\
+  path: D:\\IdeaProjects\\bltx\\picture\\
